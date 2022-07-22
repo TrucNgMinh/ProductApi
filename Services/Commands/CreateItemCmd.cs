@@ -1,11 +1,13 @@
 ﻿using MediatR;
 using ProductApi.DatabaseContext;
 using ProductApi.Entities.Products;
+using System.ComponentModel.DataAnnotations;
 
 namespace ProductApi.Services.Commands
 {
     public class CreateItemCmd: IRequest<int>
     {
+        [Required(ErrorMessage = "Name is required")]
         public string Name { get; set; }
         public int Amount { get; set; }
         public string Description { get; set; }
@@ -19,6 +21,12 @@ namespace ProductApi.Services.Commands
             }
             public async Task<int> Handle(CreateItemCmd command, CancellationToken cancellationToken)
             {
+
+                if (_context.Products.Any(p=> p.Name == command.Name))
+                {
+                    return 0;
+                }
+
                 var product = new Product();
 
                 product.Price = command.Price;

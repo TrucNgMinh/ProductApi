@@ -22,9 +22,12 @@ namespace ProductApi.Services.Commands
                 var product = _context.Products.Where(e => e.Id == command.Id).FirstOrDefault();
                 if (product == null)
                 {
-                    return default;
+                    return -1;
                 }
                 else
+                if (_context.Products.Any(e => e.Id != command.Id && e.Name == command.Name)) {
+                    return 0;
+                } else
                 {
                     product.Price = command.Price;
                     product.Name = command.Name;

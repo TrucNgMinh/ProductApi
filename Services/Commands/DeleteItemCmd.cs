@@ -17,7 +17,7 @@ namespace ProductApi.Services.Commands
             public async Task<int> Handle(DeleteItemCmd command, CancellationToken cancellationToken)
             {
                 var product = await _context.Products.Where(a => a.Id == command.Id).FirstOrDefaultAsync();
-                if (product == null) return default;
+                if (product == null) return -1;
                 _context.Products.Remove(product);
                 await _context.SaveChanges();
                 return product.Id;
