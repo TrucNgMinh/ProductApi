@@ -1,6 +1,6 @@
 # ProductApi
 
-An .NET 6 Web API with JSON Web Token (JWT) to authentication and Mediator design pattern.
+An .NET 6 Web API with MySQL database, JSON Web Token (JWT) to authentication and Mediator design pattern.
 
 Feature Note:
  - You must Register and then Login so that you can have the token.
