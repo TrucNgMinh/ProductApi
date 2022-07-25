@@ -8,4 +8,4 @@ Feature Note:
  - Normal user can Get All Products / Get Product By Id and they're not allow to Create/ Update/ Delete products.
  - Adminitrastion user can have the full right to all the feature.
 
-For more information, please contact me at `minhtruc.nguyen@amaris.com`
+For more information, please contact me at `minhtruc.nguyen@amaris.com`.
