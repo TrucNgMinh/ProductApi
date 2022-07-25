@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using ProductApi.DatabaseContext;
 using ProductApi.Entities.Products;
+using ProductApi.Utils.CommonConstants;
 using System.ComponentModel.DataAnnotations;
 
 namespace ProductApi.Services.Commands
@@ -24,7 +25,7 @@ namespace ProductApi.Services.Commands
 
                 if (_context.Products.Any(p=> p.Name == command.Name))
                 {
-                    return 0;
+                    return CommonConstants.CustomStatusCode.ProductNameDuplicated;
                 }
 
                 var product = new Product();

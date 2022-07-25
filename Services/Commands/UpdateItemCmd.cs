@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using ProductApi.DatabaseContext;
+using ProductApi.Utils.CommonConstants;
 
 namespace ProductApi.Services.Commands
 {
@@ -22,11 +23,11 @@ namespace ProductApi.Services.Commands
                 var product = _context.Products.Where(e => e.Id == command.Id).FirstOrDefault();
                 if (product == null)
                 {
-                    return -1;
+                    return CommonConstants.CustomStatusCode.ProductNotFound;
                 }
                 else
                 if (_context.Products.Any(e => e.Id != command.Id && e.Name == command.Name)) {
-                    return 0;
+                    return CommonConstants.CustomStatusCode.ProductNameDuplicated;
                 } else
                 {
                     product.Price = command.Price;

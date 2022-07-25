@@ -35,15 +35,15 @@ namespace ProductApi.Controllers
 
                 if (result == CommonConstants.CustomStatusCode.ProductNameDuplicated)
                 {
-                    return BadRequest(new ResponseHanlder { Status = "Bad Request", Message = "Name Duplicated" });
+                    return BadRequest(new ResponseHanlder { Status = CommonConstants.StatusType.BadRequest, Message = CommonConstants.CustomErrorMessage.NameDuplicated });
                 }
 
-                return Ok(new ResponseHanlder { Status = "Success", Message = "Product Created with Id = " + result });
+                return Ok(new ResponseHanlder { Status = CommonConstants.StatusType.Success, Message = "Product Created with Id = " + result });
 
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, new ResponseHanlder { Status = "Error", Message = ex.Message });
+                return StatusCode(StatusCodes.Status500InternalServerError, new ResponseHanlder { Status = CommonConstants.StatusType.InternalServerError, Message = ex.Message });
             }
         }
 
@@ -61,7 +61,7 @@ namespace ProductApi.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, new ResponseHanlder { Status = "Error", Message = ex.Message });
+                return StatusCode(StatusCodes.Status500InternalServerError, new ResponseHanlder { Status = CommonConstants.StatusType.InternalServerError, Message = ex.Message });
             }
         }
 
@@ -81,7 +81,7 @@ namespace ProductApi.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, new ResponseHanlder { Status = "Error", Message = ex.Message });
+                return StatusCode(StatusCodes.Status500InternalServerError, new ResponseHanlder { Status = CommonConstants.StatusType.InternalServerError, Message = ex.Message });
             }
         }
 
@@ -100,14 +100,14 @@ namespace ProductApi.Controllers
 
                 if (result == CommonConstants.CustomStatusCode.ProductNotFound)
                 {
-                    return BadRequest(new ResponseHanlder { Status = "Bad Request", Message = "Product not exist!!!" });
+                    return BadRequest(new ResponseHanlder { Status = CommonConstants.StatusType.BadRequest, Message = CommonConstants.CustomErrorMessage.ProductNotExist });
                 }
 
-                return Ok(new ResponseHanlder { Status = "Success", Message = "Product with Id = " + result + " has been deleted." });
+                return Ok(new ResponseHanlder { Status = CommonConstants.StatusType.Success, Message = "Product with Id = " + result + " has been deleted." });
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, new ResponseHanlder { Status = "Error", Message = ex.Message });
+                return StatusCode(StatusCodes.Status500InternalServerError, new ResponseHanlder { Status = CommonConstants.StatusType.InternalServerError, Message = ex.Message });
             }
         }
 
@@ -123,7 +123,7 @@ namespace ProductApi.Controllers
         {
             if (id != command.Id)
             {
-                return StatusCode(StatusCodes.Status400BadRequest, new ResponseHanlder { Status = "Error", Message = "ID invalid" });
+                return StatusCode(StatusCodes.Status400BadRequest, new ResponseHanlder { Status = CommonConstants.StatusType.BadRequest, Message = CommonConstants.CustomErrorMessage.InvalidId });
             }
 
             try
@@ -132,18 +132,18 @@ namespace ProductApi.Controllers
 
                 if (result == CommonConstants.CustomStatusCode.ProductNotFound)
                 {
-                    return BadRequest(new ResponseHanlder { Status = "Bad Request", Message = "Product not exist!!!" });
+                    return BadRequest(new ResponseHanlder { Status = CommonConstants.StatusType.BadRequest, Message = CommonConstants.CustomErrorMessage.ProductNotExist });
                 }
                 if (result == CommonConstants.CustomStatusCode.ProductNameDuplicated)
                 {
-                    return BadRequest(new ResponseHanlder { Status = "Bad Request", Message = "Name duplicated!!!" });
+                    return BadRequest(new ResponseHanlder { Status = CommonConstants.StatusType.BadRequest, Message = CommonConstants.CustomErrorMessage.NameDuplicated });
                 }
-                return Ok(new ResponseHanlder { Status = "Success", Message = "Product with Id = " + result + " has been deleted." });
+                return Ok(new ResponseHanlder { Status = CommonConstants.StatusType.Success, Message = "Product with Id = " + result + " has been deleted." });
 
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, new ResponseHanlder { Status = "Error", Message = ex.Message });
+                return StatusCode(StatusCodes.Status500InternalServerError, new ResponseHanlder { Status = CommonConstants.StatusType.InternalServerError, Message = ex.Message });
             }
         }
 

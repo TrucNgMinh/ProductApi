@@ -2,11 +2,22 @@
 {
     public class CommonConstants
     {
+        public static string ConnectionStringName = "ProductDatabase";
+
+
         public static class UserRoles
         {
             public const string Admin = "Admin";
             public const string User = "User";
             
+        }
+
+        public static class StatusType
+        {
+            public const string BadRequest = "400 Bad Request";
+            public const string Success = "200 Success";
+            public const string InternalServerError = "500 Internal Server Error";
+
         }
 
         public static class CustomStatusCode
