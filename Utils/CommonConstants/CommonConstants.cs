@@ -20,6 +20,13 @@
 
         }
 
+        public static class CustomErrorMessage
+        {
+            public const string ProductNotExist = "Product is not exist !!!";
+            public const string NameDuplicated = "Product Name duplicated !!!";
+            public const string InvalidId = "Product ID invalid !!!";
+        }
+
         public static class CustomStatusCode
         {
             public const int ProductNotFound = -1;
