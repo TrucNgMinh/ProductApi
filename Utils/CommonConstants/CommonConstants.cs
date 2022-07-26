@@ -4,6 +4,11 @@
     {
         public static string ConnectionStringName = "ProductDatabase";
 
+        public static class CacheKeys
+        {
+            public const string GetProductById = "__getProductById__";
+        }
+
 
         public static class UserRoles
         {

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using ProductApi.Entities.Common;
 using ProductApi.Entities.Products;
 using ProductApi.Services.Commands;
@@ -15,8 +16,15 @@ namespace ProductApi.Controllers
     [Route("[controller]")]
     public class ProductController : Controller
     {
+        private IMemoryCache _memoryCache;
+
+        public ProductController(IMemoryCache memoryCache)
+        {
+            _memoryCache = memoryCache;
+        }
 
         private IMediator _mediator;
+
         protected IMediator Mediator => _mediator ??= HttpContext.RequestServices.GetService<IMediator>();
 
         /// <summary>
@@ -31,6 +39,7 @@ namespace ProductApi.Controllers
         {
             try
             {
+                
                 var result = await Mediator.Send(command);
 
                 if (result == CommonConstants.CustomStatusCode.ProductNameDuplicated)
@@ -53,6 +62,7 @@ namespace ProductApi.Controllers
         /// <returns></returns>
         [Authorize]
         [HttpGet]
+        [ResponseCache(Duration = 5, Location = ResponseCacheLocation.Any, NoStore = false)]
         public async Task<IActionResult> GetAll()
         {
             try
@@ -73,11 +83,26 @@ namespace ProductApi.Controllers
         /// 
         [Authorize]
         [HttpGet("{id}")]
+        [ResponseCache(Duration = 10, Location = ResponseCacheLocation.Any, NoStore = false, VaryByQueryKeys = new[] { "id" })]
         public async Task<IActionResult> GetById(int id)
         {
             try
             {
-                return Ok(await Mediator.Send(new GetByIdQuery { Id = id }));
+
+                var product = await Mediator.Send(new GetByIdQuery {Id = id});
+                
+                if (!_memoryCache.TryGetValue(CommonConstants.CacheKeys.GetProductById, out Product cacheValue))
+                {
+                    cacheValue = product;
+
+                    var cacheEntryOptions = new MemoryCacheEntryOptions()
+                        .SetSlidingExpiration(TimeSpan.FromSeconds(60));
+
+                    _memoryCache.Set(CommonConstants.CacheKeys.GetProductById, cacheValue, cacheEntryOptions);
+                }
+                
+                
+                return Ok(product);
             }
             catch (Exception ex)
             {
